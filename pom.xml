@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.sso</groupId>
+    <artifactId>sso</artifactId>
+    <version>5.1.1</version>
+
+    <packaging>war</packaging>
+    <name>CAS</name>
+    <description>CAS</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-webapp${app.server}</artifactId>
+            <version>${cas.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-ldap</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-json-service-registry</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
+                <configuration>
+                    <mainClass>org.springframework.boot.loader.WarLauncher</mainClass>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <recompressZippedFiles>false</recompressZippedFiles>
+                    <archive>
+                        <compress>false</compress>
+                        <manifestFile>${project.build.directory}/war/work/org.apereo.cas/cas-server-webapp${app.server}/META-INF/MANIFEST.MF
+                        </manifestFile>
+                    </archive>
+                    <overlays>
+                        <overlay>
+                            <groupId>org.apereo.cas</groupId>
+                            <artifactId>cas-server-webapp${app.server}</artifactId>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
+            </plugin>
+        </plugins>
+        <finalName>cas</finalName>
+    </build>
+    <properties>
+        <cas.version>5.1.1</cas.version>
+        <springboot.version>1.5.3.RELEASE</springboot.version>
+        <!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan to provide appserver -->
+        <app.server>-tomcat</app.server>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+</project>

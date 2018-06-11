@@ -1,0 +1,16 @@
+{
+  "@class" : "org.apereo.cas.services.RegexRegisteredService",
+  "serviceId" : "^http?://.*",
+  "name" : "back",
+  "id" : 1,
+  "description" : "Allows only back services",
+  "logoutType" : "BACK_CHANNEL",
+  "attributeReleasePolicy" : {
+    "@class" : "org.apereo.cas.services.ReturnAllowedAttributeReleasePolicy",
+    "principalAttributesRepository" : {
+      "@class" : "org.apereo.cas.authentication.principal.DefaultPrincipalAttributesRepository"
+    },
+    "authorizedToReleaseCredentialPassword" : false,
+    "authorizedToReleaseProxyGrantingTicket" : false
+  }
+}
